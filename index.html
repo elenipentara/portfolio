@@ -673,5 +673,99 @@
             isSwiping = false;
         }
 
-        function handleSwipe
+        function handleSwipe() {
+            const swipeThreshold = 50; // Minimum distance for a swipe
+            const swipeDistance = touchStartX - touchEndX;
+
+            if (Math.abs(swipeDistance) < swipeThreshold) return;
+
+            // Determine which slideshow is active and swipe accordingly
+            if (document.getElementById('visual-slideshow').classList.contains('show')) {
+                if (swipeDistance > 0) {
+                    changeSlide(1); // Swipe left = next slide
+                } else {
+                    changeSlide(-1); // Swipe right = previous slide
+                }
+            } else if (document.getElementById('ulises-slideshow').classList.contains('show')) {
+                if (swipeDistance > 0) {
+                    changeUlisesSlide(1);
+                } else {
+                    changeUlisesSlide(-1);
+                }
+            } else if (document.getElementById('metamorfosi-slideshow').classList.contains('show')) {
+                if (swipeDistance > 0) {
+                    changeMetamorfosiSlide(1);
+                } else {
+                    changeMetamorfosiSlide(-1);
+                }
+            } else if (document.getElementById('cyborg-slideshow').classList.contains('show')) {
+                if (swipeDistance > 0) {
+                    changeCyborgSlide(1);
+                } else {
+                    changeCyborgSlide(-1);
+                }
+            }
+        }
+
+        // Add touch event listeners to all slideshows
+        document.addEventListener('DOMContentLoaded', function() {
+            const slideshows = [
+                'visual-slideshow',
+                'ulises-slideshow', 
+                'metamorfosi-slideshow',
+                'cyborg-slideshow'
+            ];
+
+            slideshows.forEach(slideshowId => {
+                const slideshow = document.getElementById(slideshowId);
+                if (slideshow) {
+                    slideshow.addEventListener('touchstart', handleTouchStart, { passive: false });
+                    slideshow.addEventListener('touchmove', handleTouchMove, { passive: false });
+                    slideshow.addEventListener('touchend', handleTouchEnd, { passive: false });
+                }
+            });
+        });
+
+        // Keyboard navigation and modal controls
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+            
+            // Keyboard navigation for slideshows
+            if (document.getElementById('visual-slideshow').classList.contains('show')) {
+                if (event.key === 'ArrowLeft') {
+                    changeSlide(-1);
+                } else if (event.key === 'ArrowRight') {
+                    changeSlide(1);
+                }
+            }
+            
+            if (document.getElementById('ulises-slideshow').classList.contains('show')) {
+                if (event.key === 'ArrowLeft') {
+                    changeUlisesSlide(-1);
+                } else if (event.key === 'ArrowRight') {
+                    changeUlisesSlide(1);
+                }
+            }
+            
+            if (document.getElementById('metamorfosi-slideshow').classList.contains('show')) {
+                if (event.key === 'ArrowLeft') {
+                    changeMetamorfosiSlide(-1);
+                } else if (event.key === 'ArrowRight') {
+                    changeMetamorfosiSlide(1);
+                }
+            }
+            
+            if (document.getElementById('cyborg-slideshow').classList.contains('show')) {
+                if (event.key === 'ArrowLeft') {
+                    changeCyborgSlide(-1);
+                } else if (event.key === 'ArrowRight') {
+                    changeCyborgSlide(1);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
       
