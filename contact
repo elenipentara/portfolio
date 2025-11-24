@@ -39,6 +39,7 @@
             margin-bottom: 30px;
             text-decoration: none;
             color: #333;
+            cursor: pointer;
             transition: opacity 0.3s ease;
         }
 
@@ -60,12 +61,11 @@
             transition: opacity 0.3s ease;
         }
 
-        nav a:hover,
-        nav a.active {
+        nav a:hover {
             opacity: 0.6;
         }
 
-        /* Contact Page Styles */
+        /* Contact form styles */
         .contact-content {
             max-width: 600px;
             margin: 0 auto;
@@ -129,16 +129,6 @@
                 font-size: 20px;
                 letter-spacing: 2px;
             }
-
-            .contact-item {
-                flex-direction: column;
-                gap: 5px;
-            }
-
-            .contact-label {
-                min-width: auto;
-                text-align: center;
-            }
         }
     </style>
 </head>
@@ -148,6 +138,7 @@
             <a href="index.html" class="logo">eleni pentara</a>
             <nav>
                 <a href="storyboards.html">storyboards</a>
+                <a href="contact.html">contact</a>
             </nav>
         </header>
 
