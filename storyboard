@@ -113,6 +113,7 @@
         <header>
             <a href="index.html" class="logo">eleni pentara</a>
             <nav>
+                <a href="storyboards.html">storyboards</a>
                 <a href="contact.html">contact</a>
             </nav>
         </header>
@@ -133,4 +134,4 @@
         </main>
     </div>
 </body>
-</html>    
+</html>
