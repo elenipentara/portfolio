@@ -39,6 +39,7 @@
             margin-bottom: 30px;
             text-decoration: none;
             color: #333;
+            cursor: pointer;
             transition: opacity 0.3s ease;
         }
 
@@ -60,65 +61,33 @@
             transition: opacity 0.3s ease;
         }
 
-        nav a:hover,
-        nav a.active {
+        nav a:hover {
             opacity: 0.6;
         }
 
-        /* Video Gallery Styles */
-        .intro-text {
+        /* Video styles */
+        .video-section {
             text-align: center;
-            max-width: 600px;
-            margin: 0 auto 60px;
-            font-size: 16px;
-            color: #666;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
-        .video-gallery {
-            display: grid;
-            gap: 60px;
-            margin-bottom: 80px;
-        }
-
-        .video-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        .video-title {
+            font-size: 20px;
+            margin-bottom: 30px;
+            font-weight: normal;
+            letter-spacing: 1px;
         }
 
         .video-container {
-            position: relative;
             width: 100%;
             max-width: 800px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-            background: #f8f8f8;
+            margin: 0 auto;
         }
 
         .video-container video {
             width: 100%;
             height: auto;
-            display: block;
-        }
-
-        .video-info {
-            text-align: center;
-            max-width: 600px;
-        }
-
-        .video-title {
-            font-size: 20px;
-            margin-bottom: 10px;
-            font-weight: normal;
-            letter-spacing: 1px;
-        }
-
-        .video-description {
-            color: #666;
-            font-size: 14px;
-            line-height: 1.5;
         }
 
         /* Responsive design */
@@ -136,33 +105,6 @@
                 font-size: 20px;
                 letter-spacing: 2px;
             }
-
-            .video-gallery {
-                gap: 40px;
-            }
-
-            .video-title {
-                font-size: 18px;
-            }
-        }
-
-        /* Loading state for videos */
-        .video-container.loading {
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            animation: loading 1.5s infinite;
-        }
-
-        @keyframes loading {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-
-        /* Hover effects */
-        .video-container:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-            transition: all 0.3s ease;
         }
     </style>
 </head>
@@ -176,47 +118,19 @@
         </header>
 
         <main>
-            <div class="video-gallery">
-                <!-- Last Goodbye Animatic -->
-                <div class="video-item">
-                    <div class="video-info">
-                        <h2 class="video-title">The Last Goodbye</h2>
-                    </div>
-                    <div class="video-container">
-                        <video 
-                            controls 
-                            preload="metadata"
-                            poster="assets/videos/LAST_GOODBYE-poster.jpg">
-                            <source src="assets/videos/LAST_GOODBYE.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                    </div>
+            <div class="video-section">
+                <h1 class="video-title">The Last Goodbye</h1>
+                <div class="video-container">
+                    <video 
+                        controls 
+                        preload="metadata"
+                        poster="assets/videos/LAST_GOODBYE-poster.jpg">
+                        <source src="assets/videos/LAST_GOODBYE.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
                 </div>
             </div>
         </main>
     </div>
-
-    <script>
-        // Add loading states and error handling for videos
-        document.addEventListener('DOMContentLoaded', function() {
-            const videos = document.querySelectorAll('video');
-            
-            videos.forEach(video => {
-                const container = video.parentElement;
-                
-                // Add loading class
-                container.classList.add('loading');
-                
-                video.addEventListener('loadeddata', function() {
-                    container.classList.remove('loading');
-                });
-                
-                video.addEventListener('error', function() {
-                    container.classList.remove('loading');
-                    container.innerHTML = '<div style="padding: 40px; text-align: center; color: #999;">Video unavailable</div>';
-                });
-            });
-        });
-    </script>
 </body>
-</html>
+</html>    
