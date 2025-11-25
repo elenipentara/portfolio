@@ -79,6 +79,24 @@
             max-width: 800px;
             width: 100%;
             margin: 20px 0;
+            background: #f5f5f5;
+            min-height: 300px;
+        }
+
+        /* Video placeholder when files are missing */
+        .video-placeholder {
+            max-width: 800px;
+            width: 100%;
+            height: 300px;
+            background: #f5f5f5;
+            border: 2px dashed #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px auto;
+            font-size: 14px;
+            color: #666;
+            font-style: italic;
         }
 
         /* Theatre section */
@@ -125,6 +143,7 @@
         .slideshow {
             display: none;
             margin-top: 40px;
+            position: relative;
         }
 
         .slideshow.show {
@@ -137,6 +156,7 @@
             justify-content: center;
             align-items: center;
             flex-direction: column;
+            min-height: 400px;
         }
 
         .slideshow-image {
@@ -145,7 +165,7 @@
             object-fit: contain;
             cursor: pointer;
             display: none;
-            margin-bottom: 60px;
+            margin-bottom: 80px;
         }
 
         .slideshow-image.active {
@@ -154,23 +174,31 @@
 
         .slide-nav {
             position: absolute;
-            bottom: 20px;
+            top: 50%;
+            transform: translateY(-50%);
             background: none;
             border: none;
-            font-size: 18px;
+            font-size: 24px;
             font-family: 'EB Garamond', serif;
             font-weight: 300;
             color: #666;
             cursor: pointer;
             transition: color 0.3s;
+            z-index: 10;
+            padding: 10px;
         }
 
         .slide-nav:hover {
             color: #000;
         }
 
-        .slide-prev { left: 45%; }
-        .slide-next { right: 45%; }
+        .slide-prev { 
+            left: calc(25vw - 50px);
+        }
+        
+        .slide-next { 
+            right: calc(25vw - 50px);
+        }
 
         .slide-info {
             font-size: 16px;
@@ -178,10 +206,11 @@
             color: #666;
             font-style: italic;
             position: absolute;
-            bottom: 50px;
+            bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
             white-space: nowrap;
+            z-index: 5;
         }
 
         /* Modal */
@@ -221,10 +250,15 @@
             .categories { flex-direction: column; gap: 20px; }
             .divider { display: none; }
             .storyboards-content h2 { font-size: 1.5em; }
-            .slideshow-image { max-width: 90vw; max-height: 60vh; }
-            .slide-prev { left: 20%; }
-            .slide-next { right: 20%; }
-            .slide-info { font-size: 12px; white-space: normal; max-width: 80%; }
+            .slideshow-image { max-width: 90vw; max-height: 60vh; margin-bottom: 100px; }
+            .slide-prev { left: 10px; }
+            .slide-next { right: 10px; }
+            .slide-info { 
+                font-size: 12px; 
+                white-space: normal; 
+                max-width: 80%; 
+                text-align: center;
+            }
         }
     </style>
 </head>
@@ -242,18 +276,24 @@
     <!-- STORYBOARDS SECTION -->
     <div class="content-section storyboards-content" id="storyboards-content">
         <h2>The Last Goodbye</h2>
-        <video controls>
+        <video controls preload="metadata">
+            <source src="LAST_GOODBYE.mp4" type="video/mp4">
             <source src="assets/videos/LAST_GOODBYE.mp4" type="video/mp4">
+            <div class="video-placeholder">Video file not found: LAST_GOODBYE.mp4</div>
         </video>
         
         <h2>Magic School</h2>
-        <video controls>
+        <video controls preload="metadata">
+            <source src="Magic_School.mp4" type="video/mp4">
             <source src="assets/videos/Magic_School.mp4" type="video/mp4">
+            <div class="video-placeholder">Video file not found: Magic_School.mp4</div>
         </video>
         
         <h2>Minuto Aventura</h2>
-        <video controls>
+        <video controls preload="metadata">
+            <source src="minuto.mp4" type="video/mp4">
             <source src="assets/videos/minuto.mp4" type="video/mp4">
+            <div class="video-placeholder">Video file not found: minuto.mp4</div>
         </video>
     </div>
     
@@ -279,8 +319,8 @@
             <img src="https://i.imgur.com/N6JsG7j.jpeg" class="slideshow-image" onclick="openModal(this.src)">
             <button class="slide-nav slide-prev" onclick="changeSlide('ulises', -1)">←</button>
             <button class="slide-nav slide-next" onclick="changeSlide('ulises', 1)">→</button>
+            <div class="slide-info">PHOTOS: JÚLIO COELHO / Ulises Agreste / 2024</div>
         </div>
-        <div class="slide-info">PHOTOS: JÚLIO COELHO / Ulises Agreste / 2024</div>
     </div>
     
     <!-- Metamorfosi Gallery -->
@@ -293,8 +333,8 @@
             <img src="https://i.imgur.com/yK4f6zf.jpeg" class="slideshow-image" onclick="openModal(this.src)">
             <button class="slide-nav slide-prev" onclick="changeSlide('metamorfosi', -1)">←</button>
             <button class="slide-nav slide-next" onclick="changeSlide('metamorfosi', 1)">→</button>
+            <div class="slide-info">PHOTO: CHIARA HERRERIAS STADE / Metamorfosi della terra / 2025</div>
         </div>
-        <div class="slide-info">PHOTO: CHIARA HERRERIAS STADE / Metamorfosi della terra / 2025</div>
     </div>
     
     <!-- Cyborg Gallery -->
@@ -308,8 +348,8 @@
             <img src="https://i.imgur.com/kiAsg66.jpeg" class="slideshow-image" onclick="openModal(this.src)">
             <button class="slide-nav slide-prev" onclick="changeSlide('cyborg', -1)">←</button>
             <button class="slide-nav slide-next" onclick="changeSlide('cyborg', 1)">→</button>
+            <div class="slide-info">PHOTOS: CHIARA HERRERIAS STADE / Cyborg-phagy / 2023</div>
         </div>
-        <div class="slide-info">PHOTOS: CHIARA HERRERIAS STADE / Cyborg-phagy / 2023</div>
     </div>
 
     <!-- Modal -->
@@ -322,7 +362,13 @@
         let slides = { ulises: 0, metamorfosi: 0, cyborg: 0 };
 
         function reset() {
-            document.querySelectorAll('.content-section, .slideshow, .theatre-list, .contact-email').forEach(el => el.classList.remove('show'));
+            // Hide all content sections
+            document.querySelectorAll('.content-section, .theatre-list, .contact-email').forEach(el => el.classList.remove('show'));
+            
+            // Hide all slideshows
+            document.querySelectorAll('.slideshow').forEach(el => el.classList.remove('show'));
+            
+            // Remove active states
             document.querySelectorAll('.category').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.project').forEach(el => el.classList.remove('selected'));
         }
@@ -345,7 +391,13 @@
             document.getElementById('cat-contact').classList.add('active');
         }
 
+        function hideAllSlideshows() {
+            document.querySelectorAll('.slideshow').forEach(el => el.classList.remove('show'));
+            document.querySelectorAll('.project').forEach(el => el.classList.remove('selected'));
+        }
+
         function showUlises() {
+            hideAllSlideshows();
             document.getElementById('slideshow-ulises').classList.add('show');
             document.querySelector('[onclick="showUlises()"]').classList.add('selected');
             slides.ulises = 0;
@@ -353,6 +405,7 @@
         }
 
         function showMetamorfosi() {
+            hideAllSlideshows();
             document.getElementById('slideshow-metamorfosi').classList.add('show');
             document.querySelector('[onclick="showMetamorfosi()"]').classList.add('selected');
             slides.metamorfosi = 0;
@@ -360,6 +413,7 @@
         }
 
         function showCyborg() {
+            hideAllSlideshows();
             document.getElementById('slideshow-cyborg').classList.add('show');
             document.querySelector('[onclick="showCyborg()"]').classList.add('selected');
             slides.cyborg = 0;
@@ -388,6 +442,7 @@
             document.getElementById('modal').style.display = 'none';
         }
 
+        // Touch navigation for mobile
         let touchX = 0;
         document.addEventListener('touchstart', e => touchX = e.touches[0].clientX);
         document.addEventListener('touchend', function(e) {
@@ -399,12 +454,27 @@
             });
         });
 
+        // Keyboard navigation
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') closeModal();
             const dir = e.key === 'ArrowLeft' ? -1 : e.key === 'ArrowRight' ? 1 : 0;
             if (!dir) return;
             ['ulises', 'metamorfosi', 'cyborg'].forEach(g => {
                 if (document.getElementById(`slideshow-${g}`).classList.contains('show')) changeSlide(g, dir);
+            });
+        });
+
+        // Handle video load errors
+        document.addEventListener('DOMContentLoaded', function() {
+            const videos = document.querySelectorAll('video');
+            videos.forEach(video => {
+                video.addEventListener('error', function() {
+                    const placeholder = document.createElement('div');
+                    placeholder.className = 'video-placeholder';
+                    placeholder.textContent = 'Video file not found: ' + this.querySelector('source').src.split('/').pop();
+                    this.parentNode.insertBefore(placeholder, this.nextSibling);
+                    this.style.display = 'none';
+                });
             });
         });
     </script>
