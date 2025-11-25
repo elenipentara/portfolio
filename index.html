@@ -68,23 +68,17 @@
         }
 
         /* Storyboards videos */
-        .video-container {
-            margin: 60px auto;
-            max-width: 800px;
-        }
-
-        .video-container h2 {
+        .storyboards-content h2 {
             font-size: 2em;
             font-weight: 400;
-            margin-bottom: 30px;
+            margin: 60px 0 30px 0;
             font-family: 'EB Garamond', serif;
         }
 
-        .video-container video {
-            width: 100%;
+        .storyboards-content video {
             max-width: 800px;
-            height: auto;
-            background: #000;
+            width: 100%;
+            margin: 20px 0;
         }
 
         /* Theatre section */
@@ -151,7 +145,7 @@
             object-fit: contain;
             cursor: pointer;
             display: none;
-            margin-bottom: 60px;
+            margin-bottom: 20px;
         }
 
         .slideshow-image.active {
@@ -160,7 +154,8 @@
 
         .slide-nav {
             position: absolute;
-            bottom: 20px;
+            top: 50%;
+            transform: translateY(-50%);
             background: none;
             border: none;
             font-size: 18px;
@@ -175,19 +170,16 @@
             color: #000;
         }
 
-        .slide-prev { left: 45%; }
-        .slide-next { right: 45%; }
+        .slide-prev { left: calc(25vw - 30px); }
+        .slide-next { right: calc(25vw - 30px); }
 
         .slide-info {
             font-size: 16px;
             font-weight: 300;
             color: #666;
             font-style: italic;
-            position: absolute;
-            bottom: 50px;
-            left: 50%;
-            transform: translateX(-50%);
-            white-space: nowrap;
+            margin-top: 20px;
+            text-align: center;
         }
 
         /* Modal */
@@ -226,8 +218,7 @@
             h1 { font-size: 1.3em; }
             .categories { flex-direction: column; gap: 20px; }
             .divider { display: none; }
-            .video-container { max-width: 100%; }
-            .video-container h2 { font-size: 1.5em; }
+            .storyboards-content h2 { font-size: 1.5em; }
             .slideshow-image { max-width: 90vw; max-height: 60vh; }
             .slide-prev { left: 20%; }
             .slide-next { right: 20%; }
@@ -247,30 +238,21 @@
     </div>
     
     <!-- STORYBOARDS SECTION -->
-    <div class="content-section" id="storyboards-content">
-        <div class="video-container">
-            <h2>The Last Goodbye</h2>
-            <video controls>
-                <source src="your-video-url-1.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        </div>
-
-        <div class="video-container">
-            <h2>Magic School</h2>
-            <video controls>
-                <source src="your-video-url-2.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        </div>
-
-        <div class="video-container">
-            <h2>Minuto Aventura</h2>
-            <video controls>
-                <source src="your-video-url-3.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        </div>
+    <div class="content-section storyboards-content" id="storyboards-content">
+        <h2>The Last Goodbye</h2>
+        <video controls>
+            <source src="https://github.com/elenipentara/portfolio/raw/main/assets/videos/LAST_GOODBYE.mp4" type="video/mp4">
+        </video>
+        
+        <h2>Magic School</h2>
+        <video controls>
+            <source src="https://github.com/elenipentara/portfolio/raw/main/assets/videos/Magic_School.mp4" type="video/mp4">
+        </video>
+        
+        <h2>Minuto Aventura</h2>
+        <video controls>
+            <source src="https://github.com/elenipentara/portfolio/raw/main/assets/videos/minuto.mp4" type="video/mp4">
+        </video>
     </div>
     
     <!-- THEATRE SECTION -->
@@ -336,11 +318,17 @@
 
     <script>
         let slides = { ulises: 0, metamorfosi: 0, cyborg: 0 };
+        let currentSlideshow = null;
 
         function reset() {
+            // Hide all content sections
             document.querySelectorAll('.content-section, .slideshow, .theatre-list, .contact-email').forEach(el => el.classList.remove('show'));
+            
+            // Remove active states
             document.querySelectorAll('.category').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.project').forEach(el => el.classList.remove('selected'));
+            
+            currentSlideshow = null;
         }
 
         function showStoryboards() {
@@ -361,38 +349,57 @@
             document.getElementById('cat-contact').classList.add('active');
         }
 
+        function hideAllSlideshows() {
+            document.querySelectorAll('.slideshow').forEach(el => el.classList.remove('show'));
+            document.querySelectorAll('.project').forEach(el => el.classList.remove('selected'));
+            currentSlideshow = null;
+        }
+
         function showUlises() {
+            if (currentSlideshow === 'ulises') return;
+            hideAllSlideshows();
             document.getElementById('slideshow-ulises').classList.add('show');
             document.querySelector('[onclick="showUlises()"]').classList.add('selected');
             slides.ulises = 0;
             updateSlides('ulises');
+            currentSlideshow = 'ulises';
         }
 
         function showMetamorfosi() {
+            if (currentSlideshow === 'metamorfosi') return;
+            hideAllSlideshows();
             document.getElementById('slideshow-metamorfosi').classList.add('show');
             document.querySelector('[onclick="showMetamorfosi()"]').classList.add('selected');
             slides.metamorfosi = 0;
             updateSlides('metamorfosi');
+            currentSlideshow = 'metamorfosi';
         }
 
         function showCyborg() {
+            if (currentSlideshow === 'cyborg') return;
+            hideAllSlideshows();
             document.getElementById('slideshow-cyborg').classList.add('show');
             document.querySelector('[onclick="showCyborg()"]').classList.add('selected');
             slides.cyborg = 0;
             updateSlides('cyborg');
+            currentSlideshow = 'cyborg';
         }
 
         function changeSlide(gallery, dir) {
             const imgs = document.querySelectorAll(`#slideshow-${gallery} .slideshow-image`);
+            if (imgs.length === 0) return;
+            
             imgs[slides[gallery]].classList.remove('active');
             slides[gallery] = (slides[gallery] + dir + imgs.length) % imgs.length;
             imgs[slides[gallery]].classList.add('active');
         }
 
         function updateSlides(gallery) {
-            document.querySelectorAll(`#slideshow-${gallery} .slideshow-image`).forEach((img, i) => {
+            const imgs = document.querySelectorAll(`#slideshow-${gallery} .slideshow-image`);
+            imgs.forEach((img, i) => {
                 img.classList.toggle('active', i === 0);
             });
+            slides[gallery] = 0;
         }
 
         function openModal(src) {
@@ -404,24 +411,25 @@
             document.getElementById('modal').style.display = 'none';
         }
 
+        // Touch navigation for mobile
         let touchX = 0;
         document.addEventListener('touchstart', e => touchX = e.touches[0].clientX);
         document.addEventListener('touchend', function(e) {
             const diff = touchX - e.changedTouches[0].clientX;
             if (Math.abs(diff) < 50) return;
             const dir = diff > 0 ? 1 : -1;
-            ['ulises', 'metamorfosi', 'cyborg'].forEach(g => {
-                if (document.getElementById(`slideshow-${g}`).classList.contains('show')) changeSlide(g, dir);
-            });
+            if (currentSlideshow) {
+                changeSlide(currentSlideshow, dir);
+            }
         });
 
+        // Keyboard navigation
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') closeModal();
             const dir = e.key === 'ArrowLeft' ? -1 : e.key === 'ArrowRight' ? 1 : 0;
-            if (!dir) return;
-            ['ulises', 'metamorfosi', 'cyborg'].forEach(g => {
-                if (document.getElementById(`slideshow-${g}`).classList.contains('show')) changeSlide(g, dir);
-            });
+            if (dir && currentSlideshow) {
+                changeSlide(currentSlideshow, dir);
+            }
         });
     </script>
 </body>
