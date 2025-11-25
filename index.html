@@ -123,6 +123,15 @@
             display: block;
         }
 
+        .contact-location {
+            font-size: 16px;
+            font-weight: 300;
+            font-style: italic;
+            letter-spacing: 0.5px;
+            margin-top: 40px;
+            color: #666;
+        }
+
         /* Theatre galleries */
         .slideshow {
             display: none;
@@ -265,7 +274,10 @@
     </div>
     
     <!-- CONTACT SECTION -->
-    <div class="contact-email" id="contact-email">elenipentara@hotmail.com</div>
+    <div class="contact-email" id="contact-email">
+        elenipentara@hotmail.com
+        <div class="contact-location">copenhagen denmark</div>
+    </div>
     
     <!-- Ulises Gallery -->
     <div class="slideshow" id="slideshow-ulises">
@@ -413,6 +425,20 @@
             document.getElementById('modal').style.display = 'none';
         }
 
+        function navigateModalImage(direction) {
+            if (!currentSlideshow) return;
+            
+            const modal = document.getElementById('modal');
+            if (modal.style.display === 'block') {
+                changeSlide(currentSlideshow, direction);
+                // Update modal image to current slide
+                const currentImg = document.querySelector(`#slideshow-${currentSlideshow} .slideshow-image.active`);
+                if (currentImg) {
+                    document.getElementById('modal-img').src = currentImg.src;
+                }
+            }
+        }
+
         // Touch navigation for mobile
         let touchX = 0;
         document.addEventListener('touchstart', e => touchX = e.touches[0].clientX);
@@ -427,10 +453,22 @@
 
         // Keyboard navigation
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') closeModal();
+            const modal = document.getElementById('modal');
+            
+            if (e.key === 'Escape') {
+                closeModal();
+                return;
+            }
+            
             const dir = e.key === 'ArrowLeft' ? -1 : e.key === 'ArrowRight' ? 1 : 0;
             if (dir && currentSlideshow) {
-                changeSlide(currentSlideshow, dir);
+                if (modal.style.display === 'block') {
+                    // Navigate in modal
+                    navigateModalImage(dir);
+                } else {
+                    // Navigate in slideshow
+                    changeSlide(currentSlideshow, dir);
+                }
             }
         });
     </script>
